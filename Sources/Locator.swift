@@ -122,6 +122,16 @@ public class LocatorManager: NSObject, CLLocationManagerDelegate {
 	
 	/// `true` if service is currenlty monitoring significant location changes
 	public private(set) var isMonitoringSignificantLocationChanges = false
+
+	public var distanceFilter: CLLocationDistance {
+		get { return manager.distanceFilter }
+		set { manager.distanceFilter = newValue }
+	}
+
+	public var pausesLocationUpdates: Bool {
+		set { self.manager.pausesLocationUpdatesAutomatically = pausesLocationUpdates }
+		get { return self.manager.pausesLocationUpdatesAutomatically }
+	}
 	
 	/// It is possible to force enable background location fetch even if your set any kind of Authorizations
 	public var backgroundLocationUpdates: Bool {
@@ -177,6 +187,7 @@ public class LocatorManager: NSObject, CLLocationManagerDelegate {
 		self.manager = CLLocationManager()
 		super.init()
 		self.manager.delegate = self
+		self.manager.pausesLocationUpdatesAutomatically = false
 		
 		// iOS 9 requires setting allowsBackgroundLocationUpdates to true in order to receive
 		// background location updates.
